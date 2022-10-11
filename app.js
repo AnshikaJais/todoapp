@@ -36,9 +36,8 @@ function ignoreFavicon(req, res, next) {
     }
     next();
 }
-
+app.use(ignoreFavicon);
 app.get("/", async (req, res) => {
-    app.use(ignoreFavicon);
     await TodoList.find().then((docs) => {
         if (docs.length === 0) {
             TodoList.create([
@@ -53,9 +52,8 @@ app.get("/", async (req, res) => {
         }
     });
 });
-
+app.use(ignoreFavicon);
 app.get("/:custListName", async (req, res) => {
-    app.use(ignoreFavicon);
     const custName = _.capitalize(req.params.custListName);
     if (custName !== "Today" && custName !== "Favicon.ico") {
         await List.findOne({ name: custName }).then((docs) => {
@@ -78,9 +76,8 @@ app.get("/:custListName", async (req, res) => {
         res.redirect("/");
     }
 });
-
+app.use(ignoreFavicon);
 app.post("/", async (req, res) => {
-    app.use(ignoreFavicon);
     const newWork = req.body.newWork; // from input tag
     const listName = req.body.list; // from button tag
     if (newWork) {
@@ -106,9 +103,8 @@ app.post("/", async (req, res) => {
         res.redirect("/");
     }
 });
-
+app.use(ignoreFavicon);
 app.post("/delete", async (req, res) => {
-    app.use(ignoreFavicon);
     const itemId = req.body.deleteWork;
     const listName = req.body.listName;
     if (listName === "Today") {
