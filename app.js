@@ -30,19 +30,15 @@ const defaultValues3 = new TodoList({
     workName: "<-- Hit this checkbox to delete the work",
 });
 
-// function ignoreFavicon(req, res, next) {
-//     if (req.originalUrl.includes("favicon.ico")) {
-//         res.status(204).end();
-//     }
-//     next();
-// }
-
-app.get("/favicon.ico", (req, res) => {
-    res.status(204).end();
+function ignoreFavicon(req, res, next) {
+    if (req.originalUrl.includes("favicon.ico")) {
+        res.status(204).end();
+    }
     next();
-});
+}
+
 app.get("/", async (req, res) => {
-    // app.use(ignoreFavicon);
+    app.use(ignoreFavicon);
     await TodoList.find().then((docs) => {
         if (docs.length === 0) {
             TodoList.create([
@@ -59,7 +55,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/:custListName", async (req, res) => {
-    // app.use(ignoreFavicon);
+    app.use(ignoreFavicon);
     const custName = _.capitalize(req.params.custListName);
     if (custName !== "Today" && custName !== "Favicon.ico") {
         await List.findOne({ name: custName }).then((docs) => {
@@ -84,7 +80,7 @@ app.get("/:custListName", async (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-    // app.use(ignoreFavicon);
+    app.use(ignoreFavicon);
     const newWork = req.body.newWork; // from input tag
     const listName = req.body.list; // from button tag
     if (newWork) {
@@ -112,7 +108,7 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/delete", async (req, res) => {
-    // app.use(ignoreFavicon);
+    app.use(ignoreFavicon);
     const itemId = req.body.deleteWork;
     const listName = req.body.listName;
     if (listName === "Today") {
