@@ -30,6 +30,12 @@ const defaultValues3 = new TodoList({
     workName: "<-- Hit this checkbox to delete the work",
 });
 
+app.get("/favicon.ico", (req, res) => {
+    res.sendStatus(404);
+    // or instead of a 404, send an actual favicon.ico file
+    // just don't let routing continue to your middleware
+});
+
 app.get("/", async (req, res) => {
     await TodoList.find().then((docs) => {
         if (docs.length === 0) {
