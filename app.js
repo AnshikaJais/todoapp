@@ -30,13 +30,6 @@ const defaultValues3 = new TodoList({
     workName: "<-- Hit this checkbox to delete the work",
 });
 
-function ignoreFavicon(req, res, next) {
-    if (req.originalUrl.includes("favicon.ico")) {
-        res.status(204).end();
-    }
-    next();
-}
-app.use(ignoreFavicon);
 app.get("/", async (req, res) => {
     await TodoList.find().then((docs) => {
         if (docs.length === 0) {
@@ -52,7 +45,7 @@ app.get("/", async (req, res) => {
         }
     });
 });
-app.use(ignoreFavicon);
+
 app.get("/:custListName", async (req, res) => {
     const custName = _.capitalize(req.params.custListName);
     if (custName !== "Today" && custName !== "Favicon.ico") {
@@ -76,7 +69,7 @@ app.get("/:custListName", async (req, res) => {
         res.redirect("/");
     }
 });
-app.use(ignoreFavicon);
+
 app.post("/", async (req, res) => {
     const newWork = req.body.newWork; // from input tag
     const listName = req.body.list; // from button tag
@@ -103,7 +96,7 @@ app.post("/", async (req, res) => {
         res.redirect("/");
     }
 });
-app.use(ignoreFavicon);
+
 app.post("/delete", async (req, res) => {
     const itemId = req.body.deleteWork;
     const listName = req.body.listName;
@@ -127,6 +120,12 @@ app.post("/delete", async (req, res) => {
         });
     }
 });
+
+app.get("*", (req, res, next) => {
+    console.log(req.url);
+    next();
+});
+
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
