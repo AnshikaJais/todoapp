@@ -121,11 +121,6 @@ app.post("/delete", async (req, res) => {
     }
 });
 
-app.get("*", (req, res, next) => {
-    console.log(req.url);
-    next();
-});
-
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
