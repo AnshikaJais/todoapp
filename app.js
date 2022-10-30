@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 //Connecting to Database
 const DB =
-    "mongodb+srv://new_database_user_0836:new_database_user_0836@cluster0.jrxautw.mongodb.net/todolistDB?retryWrites=true&w=majority";
+    "mongodb+srv://anshika:5Q3zxM7g5uj3uDZm@cluster0.jrxautw.mongodb.net/todolistDB?retryWrites=true&w=majority";
 
 mongoose.connect(DB, { useNewUrlParser: true }).then(() => {
     console.log("Connected Successfully to Database.");
