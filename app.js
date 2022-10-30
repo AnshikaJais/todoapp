@@ -11,10 +11,8 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 //Connecting to Database
-const DB = process.env.DATABASE.replace(
-    "<PASSWORD>",
-    process.env.DATABASE_PASSWORD
-).replace("<DATABASE_NAME>", "todolistDB");
+const DB =
+    "mongodb+srv://new_database_user_0836:new_database_user_0836@cluster0.jrxautw.mongodb.net/todolistDB?retryWrites=true&w=majority";
 
 mongoose.connect(DB, { useNewUrlParser: true }).then(() => {
     console.log("Connected Successfully to Database.");
